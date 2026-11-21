@@ -27,7 +27,15 @@ func NewRenderer() *Renderer {
 		"rupiah":  rupiah,
 		"tanggal": func(t time.Time) string { return t.Format("02 Jan 2006") },
 	}
-	files := []string{"login.html", "dashboard.html", "akses-ditolak.html", "users/list.html"}
+	files := []string{
+		"login.html", "dashboard.html", "akses-ditolak.html", "users/list.html",
+		"obat/list.html", "obat/form.html", "obat/detail.html", "pbf/list.html",
+		"penerimaan/list.html", "penerimaan/form.html", "penerimaan/detail.html",
+		"kasir/index.html", "penjualan/list.html", "penjualan/detail.html", "penjualan/struk.html",
+		"retur/list.html", "retur/form.html", "retur/detail.html",
+		"opname/list.html", "opname/form.html", "opname/detail.html",
+		"laporan/stok.html", "laporan/kedaluwarsa.html", "laporan/laba.html",
+	}
 	r := &Renderer{pages: make(map[string]*template.Template)}
 	for _, file := range files {
 		r.pages[file] = template.Must(template.New("layout").Funcs(funcs).ParseFiles(

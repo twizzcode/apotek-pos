@@ -1,0 +1,102 @@
+{{define "content"}}
+<div class="page-head">
+    <div>
+        <h1>Paracetamol 500 mg</h1>
+        <p class="muted">
+            Satuan dasar: Tablet · <span class="badge">Aktif</span>
+        </p>
+    </div>
+    <div class="actions">
+        <a class="btn" href="/obat">Kembali</a>{{if eq .User.Role "admin"}}<a
+            class="btn btn-primary"
+            href="/obat/1/edit"
+            >Edit</a
+        >{{end}}
+    </div>
+</div>
+<div class="detail-grid">
+    <section class="panel">
+        <h2>Konversi & Harga</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Satuan</th>
+                    <th>Isi</th>
+                    <th>Harga Jual</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tablet</td>
+                    <td>1 tablet</td>
+                    <td>Rp1.000</td>
+                </tr>
+                <tr>
+                    <td>Strip</td>
+                    <td>10 tablet</td>
+                    <td>Rp9.000</td>
+                </tr>
+                <tr>
+                    <td>Box</td>
+                    <td>100 tablet</td>
+                    <td>Rp85.000</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+    <section class="panel">
+        <h2>Ringkasan Stok</h2>
+        <dl class="summary">
+            <div>
+                <dt>Total tercatat</dt>
+                <dd>265 tablet</dd>
+            </div>
+            <div>
+                <dt>Layak jual</dt>
+                <dd>245 tablet</dd>
+            </div>
+            <div>
+                <dt>Diblokir ED</dt>
+                <dd class="text-warning">20 tablet</dd>
+            </div>
+        </dl>
+    </section>
+</div>
+<section class="panel table-wrap">
+    <h2>Stok Per Batch</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>No. Batch</th>
+                <th>Kedaluwarsa</th>
+                <th>HPP/Tablet</th>
+                <th>Stok</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>PCT-2401</td>
+                <td>20 Feb 2027</td>
+                <td>Rp620</td>
+                <td>20</td>
+                <td><span class="badge badge-warning">Blokir jual</span></td>
+            </tr>
+            <tr>
+                <td>PCT-2402</td>
+                <td>18 Agu 2027</td>
+                <td>Rp650</td>
+                <td>95</td>
+                <td><span class="badge">Layak jual</span></td>
+            </tr>
+            <tr>
+                <td>PCT-2403</td>
+                <td>10 Jan 2028</td>
+                <td>Rp675</td>
+                <td>150</td>
+                <td><span class="badge">Layak jual</span></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+{{end}}

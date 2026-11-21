@@ -1,0 +1,4 @@
+{{define "content"}}
+<div class="page-head"><div><h1>Pedagang Besar Farmasi</h1><p class="muted">Data pemasok resmi apotek</p></div></div>
+<div class="detail-grid"><section class="panel"><h2>Daftar PBF</h2><table><thead><tr><th>Nama</th><th>Telepon</th><th>Alamat</th><th>Status</th><th>Aksi</th></tr></thead><tbody><tr><td>PBF Sehat Sentosa</td><td>021-5550101</td><td>Jakarta</td><td><span class="badge">Aktif</span></td><td><button class="btn btn-small">Edit</button></td></tr><tr><td>PBF Medika Utama</td><td>021-5550102</td><td>Bogor</td><td><span class="badge">Aktif</span></td><td><button class="btn btn-small">Edit</button></td></tr></tbody></table></section>{{if eq .User.Role "admin"}}<form class="panel stack"><h2>Tambah PBF</h2><label>Nama PBF<input required></label><label>Telepon<input type="tel"></label><label>Alamat<textarea rows="3"></textarea></label><button class="btn btn-primary" type="button">Simpan PBF</button></form>{{end}}</div>
+{{end}}

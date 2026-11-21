@@ -1,0 +1,105 @@
+{{define "content"}}
+<div class="page-head">
+    <div>
+        <h1>Retur Baru</h1>
+        <p class="muted">
+            Cari transaksi lalu tentukan barang yang dikembalikan
+        </p>
+    </div>
+    <a class="btn" href="/retur">Kembali</a>
+</div>
+<section class="panel">
+    <form class="inline-search">
+        <label class="grow"
+            >Kode penjualan<input
+                value="PJL-261121-0018"
+                placeholder="PJL-..." /></label
+        ><button class="btn btn-primary" type="button">Cari Transaksi</button>
+    </form>
+</section>
+<section class="panel">
+    <div class="section-head">
+        <div>
+            <h2>PJL-261121-0018</h2>
+            <p class="muted">21 Nov 2026 · Apoteker · Total Rp58.000</p>
+        </div>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Pilih</th>
+                    <th>Obat</th>
+                    <th>Batch Asal</th>
+                    <th>Terjual</th>
+                    <th>Sudah Diretur</th>
+                    <th>Qty Retur</th>
+                    <th>Kondisi</th>
+                    <th>Refund</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input class="table-check" type="checkbox" checked />
+                    </td>
+                    <td>Paracetamol 500 mg<br /><small>Strip</small></td>
+                    <td>PCT-2402</td>
+                    <td>15 tablet</td>
+                    <td>0</td>
+                    <td>
+                        <input
+                            class="table-input"
+                            type="number"
+                            min="1"
+                            max="15"
+                            value="10"
+                        />
+                    </td>
+                    <td>
+                        <select class="table-input">
+                            <option>Baik — kembali ke stok</option>
+                            <option>Rusak — tidak restock</option>
+                        </select>
+                    </td>
+                    <td>Rp9.000</td>
+                </tr>
+                <tr>
+                    <td><input class="table-check" type="checkbox" /></td>
+                    <td>OBH Sirup 100 ml<br /><small>Botol</small></td>
+                    <td>OBH-771</td>
+                    <td>1 botol</td>
+                    <td>0</td>
+                    <td>
+                        <input
+                            class="table-input"
+                            type="number"
+                            min="1"
+                            max="1"
+                            value="1"
+                        />
+                    </td>
+                    <td>
+                        <select class="table-input">
+                            <option>Baik — kembali ke stok</option>
+                            <option>Rusak — tidak restock</option>
+                        </select>
+                    </td>
+                    <td>Rp18.000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <label
+        >Alasan retur<textarea
+            rows="3"
+            placeholder="Contoh: resep diganti dokter"
+            required
+        ></textarea>
+    </label>
+    <div class="checkout-summary">
+        <div><span>Total refund</span><strong>Rp9.000</strong></div>
+        <button class="btn btn-primary" type="button">Proses Retur</button>
+    </div>
+</section>
+{{end}}
