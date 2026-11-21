@@ -1,0 +1,16 @@
+{{define "content"}}
+<div class="page-head"><div><h1>Dashboard</h1><p class="muted">Ringkasan kondisi apotek hari ini</p></div></div>
+<div class="cards">
+    <article class="card"><span>Obat Aktif</span><strong>{{.Data.JumlahObat}}</strong></article>
+    <article class="card"><span>Batch Tersedia</span><strong>{{.Data.JumlahBatch}}</strong></article>
+    <article class="card warning"><span>Batch ED ≤ 90 Hari</span><strong>{{.Data.BatchMendekatiED}}</strong></article>
+    <article class="card"><span>Penjualan Hari Ini</span><strong>{{rupiah .Data.PenjualanHariIni}}</strong></article>
+</div>
+<section class="panel">
+    <h2>Alur Utama</h2>
+    <div class="quick-links">
+        <a href="/penerimaan">Terima Barang</a><a href="/kasir">Buka Kasir</a>
+        <a href="/opname">Stock Opname</a><a href="/laporan/stok">Lihat Laporan</a>
+    </div>
+</section>
+{{end}}

@@ -1,0 +1,25 @@
+{{define "content"}}
+<div class="page-head"><div><h1>Pengguna</h1><p class="muted">Kelola akun dan akses sistem</p></div></div>
+{{if .Error}}<div class="alert alert-error">{{.Error}}</div>{{end}}
+{{if .Pesan}}<div class="alert alert-success">{{.Pesan}}</div>{{end}}
+<section class="panel">
+    <h2>Tambah Pengguna</h2>
+    <form method="post" action="/users" class="form-grid">
+        <label>Nama<input name="nama" required></label>
+        <label>Username<input name="username" required></label>
+        <label>Password<input type="password" name="password" minlength="8" required></label>
+        <label>Role<select name="role"><option value="user">User</option><option value="apoteker">Apoteker</option><option value="admin">Admin</option></select></label>
+        <button class="btn btn-primary" type="submit">Tambah</button>
+    </form>
+</section>
+<section class="panel table-wrap">
+<table><thead><tr><th>Nama</th><th>Username</th><th>Role</th><th>Status</th><th>Dibuat</th><th>Aksi</th></tr></thead><tbody>
+{{range .Data}}
+<tr><td>{{.Nama}}</td><td>{{.Username}}</td><td><span class="badge">{{.Role}}</span></td><td>{{if .Aktif}}Aktif{{else}}Nonaktif{{end}}</td><td>{{tanggal .CreatedAt}}</td><td class="actions">
+    <form method="post" action="/users/{{.ID}}/status"><input type="hidden" name="aktif" value="{{if .Aktif}}0{{else}}1{{end}}"><button class="btn btn-small" type="submit">{{if .Aktif}}Nonaktifkan{{else}}Aktifkan{{end}}</button></form>
+    <form method="post" action="/users/{{.ID}}/password"><input type="password" name="password" minlength="8" placeholder="Password baru" required><button class="btn btn-small" type="submit">Reset</button></form>
+</td></tr>
+{{end}}
+</tbody></table>
+</section>
+{{end}}

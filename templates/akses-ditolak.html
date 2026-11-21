@@ -1,0 +1,9 @@
+{{define "content"}}
+<section class="empty-state">
+    <div class="lock">×</div>
+    <h1>Tidak Ada Akses</h1>
+    <p>Akun role <strong>{{.User.Role}}</strong> tidak memiliki akses ke sistem POS.</p>
+    <p class="muted">Keluar lalu masuk memakai akun admin atau apoteker.</p>
+    <form method="post" action="/logout"><button class="btn btn-primary" type="submit">Keluar dan Ganti Akun</button></form>
+</section>
+{{end}}

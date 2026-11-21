@@ -1,0 +1,22 @@
+{{define "layout"}}
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{.Title}} · POS Apotek</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="{{if not .User.ID}}auth-page{{end}}">
+{{if .User.ID}}
+    <header>{{template "header" .}}</header>
+    <div class="shell">
+        <aside>{{template "sidebar" .}}</aside>
+        <main>{{template "content" .}}</main>
+    </div>
+{{else}}
+    <main class="auth-main">{{template "content" .}}</main>
+{{end}}
+</body>
+</html>
+{{end}}

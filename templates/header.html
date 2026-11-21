@@ -1,0 +1,7 @@
+{{define "header"}}
+<a class="brand" href="/">Apotek Sumber Waras</a>
+<div class="user-box">
+    <span>{{.User.Nama}} · {{.User.Role}}</span>
+    <form method="post" action="/logout"><button class="btn btn-light" type="submit">Keluar</button></form>
+</div>
+{{end}}

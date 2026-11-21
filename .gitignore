@@ -1,0 +1,5 @@
+.env
+pos-apotek
+*.log
+.idea/
+.vscode/

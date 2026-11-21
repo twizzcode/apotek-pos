@@ -1,0 +1,15 @@
+{{define "sidebar"}}
+<p class="menu-label">MENU</p>
+<nav>
+    {{if or (eq .User.Role "admin") (eq .User.Role "apoteker")}}
+    <a href="/">Dashboard</a>
+    <a href="/obat">Obat & Satuan</a>
+    <a href="/penerimaan">Penerimaan</a>
+    <a href="/kasir">Kasir</a>
+    <a href="/retur">Retur</a>
+    <a href="/opname">Stock Opname</a>
+    <a href="/laporan/stok">Laporan</a>
+    {{end}}
+    {{if eq .User.Role "admin"}}<a href="/users">Pengguna</a>{{end}}
+</nav>
+{{end}}
