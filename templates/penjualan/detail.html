@@ -1,0 +1,81 @@
+{{define "content"}}
+<div class="page-head">
+    <div>
+        <h1>PJL-261121-0018</h1>
+        <p class="muted">21 Nov 2026, 14:25 · Apoteker</p>
+    </div>
+    <div class="actions">
+        <a class="btn" href="/penjualan">Kembali</a
+        ><a class="btn btn-primary" href="/penjualan/1/struk">Cetak Struk</a>
+    </div>
+</div>
+<section class="panel table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Obat</th>
+                <th>Satuan</th>
+                <th>Qty</th>
+                <th>Harga</th>
+                <th>Batch Terpakai</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Paracetamol 500 mg</td>
+                <td>Strip</td>
+                <td>2</td>
+                <td>Rp9.000</td>
+                <td>
+                    <span class="chip">PCT-2402 · 15 tablet</span>
+                    <span class="chip">PCT-2403 · 5 tablet</span>
+                </td>
+                <td>Rp18.000</td>
+            </tr>
+            <tr>
+                <td>OBH Sirup 100 ml</td>
+                <td>Botol</td>
+                <td>1</td>
+                <td>Rp18.000</td>
+                <td><span class="chip">OBH-771 · 1 botol</span></td>
+                <td>Rp18.000</td>
+            </tr>
+            <tr>
+                <td>Salep Antijamur 10 g</td>
+                <td>Tube</td>
+                <td>1</td>
+                <td>Rp22.000</td>
+                <td><span class="chip">SLP-210 · 1 tube</span></td>
+                <td>Rp22.000</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<div class="detail-grid">
+    <section class="panel">
+        <h2>Catatan Alokasi</h2>
+        <p>
+            Paracetamol diambil dari dua batch karena batch terdekat hanya
+            tersisa 15 tablet. Sistem melanjutkan 5 tablet dari batch
+            berikutnya.
+        </p>
+    </section>
+    <section class="panel">
+        <dl class="summary">
+            <div>
+                <dt>Total</dt>
+                <dd>Rp58.000</dd>
+            </div>
+            <div>
+                <dt>Bayar</dt>
+                <dd>Rp100.000</dd>
+            </div>
+            <div>
+                <dt>Kembali</dt>
+                <dd>Rp42.000</dd>
+            </div>
+        </dl>
+    </section>
+</div>
+{{end}}

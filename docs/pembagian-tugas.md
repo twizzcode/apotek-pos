@@ -17,6 +17,7 @@
 4. Validasi input dilakukan di service. Query SQL hanya di repository.
 5. Non-trivial logic wajib punya satu test kecil dengan package `testing` bawaan Go.
 6. Pull request mencantumkan `Closes #<nomor>` dan langkah uji manual.
+7. Frontend seluruh modul sudah disediakan Yafi. Hubungkan backend ke template sesuai [`frontend-contract.md`](frontend-contract.md); jangan membuat desain pengganti tanpa koordinasi.
 
 ## Urutan pengerjaan
 

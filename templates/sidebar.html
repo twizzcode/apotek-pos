@@ -4,11 +4,13 @@
     {{if or (eq .User.Role "admin") (eq .User.Role "apoteker")}}
     <a href="/">Dashboard</a>
     <a href="/obat">Obat & Satuan</a>
+    <a href="/pbf">PBF</a>
     <a href="/penerimaan">Penerimaan</a>
     <a href="/kasir">Kasir</a>
+    <a href="/penjualan">Penjualan</a>
     <a href="/retur">Retur</a>
     <a href="/opname">Stock Opname</a>
-    <a href="/laporan/stok">Laporan</a>
+    <details class="nav-group"><summary>Laporan</summary><a href="/laporan/stok">Stok Batch</a><a href="/laporan/kedaluwarsa">Kedaluwarsa</a>{{if eq .User.Role "admin"}}<a href="/laporan/laba">Laba Kotor</a>{{end}}</details>
     {{end}}
     {{if eq .User.Role "admin"}}<a href="/users">Pengguna</a>{{end}}
 </nav>

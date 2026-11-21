@@ -1,0 +1,53 @@
+{{define "content"}}
+<div class="page-head">
+    <div>
+        <h1>Retur Penjualan</h1>
+        <p class="muted">Pengembalian obat terlacak ke batch penjualan asal</p>
+    </div>
+    <a class="btn btn-primary" href="/retur/tambah">+ Retur Baru</a>
+</div>
+<form class="filter-bar">
+    <label>Dari<input type="date" /></label
+    ><label>Sampai<input type="date" /></label
+    ><label class="grow"
+        >Kode retur / penjualan<input
+            type="search"
+            placeholder="Cari kode..." /></label
+    ><button class="btn" type="button">Terapkan</button>
+</form>
+<section class="panel table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Kode Retur</th>
+                <th>Tanggal</th>
+                <th>Transaksi Asal</th>
+                <th>Petugas</th>
+                <th>Item</th>
+                <th>Refund</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>RTR-261120-0003</strong></td>
+                <td>20 Nov 2026</td>
+                <td>PJL-261119-0082</td>
+                <td>Apoteker</td>
+                <td>1</td>
+                <td>Rp9.000</td>
+                <td><a class="btn btn-small" href="/retur/1">Detail</a></td>
+            </tr>
+            <tr>
+                <td><strong>RTR-261118-0002</strong></td>
+                <td>18 Nov 2026</td>
+                <td>PJL-261117-0051</td>
+                <td>Administrator</td>
+                <td>2</td>
+                <td>Rp36.000</td>
+                <td><a class="btn btn-small" href="/retur/2">Detail</a></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+{{end}}

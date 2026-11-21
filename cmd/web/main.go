@@ -33,6 +33,7 @@ func main() {
 	authHandler := &handler.AuthHandler{Svc: userSvc, Auth: auth, View: view}
 	dashboard := &handler.DashboardHandler{Repo: &repository.DashboardRepo{DB: db}, View: view}
 	users := &handler.UserHandler{Svc: userSvc, View: view}
+	preview := &handler.PreviewHandler{View: view}
 
 	mux := http.NewServeMux()
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -45,6 +46,30 @@ func main() {
 	mux.Handle("POST /users", auth.RequireRole("admin")(http.HandlerFunc(users.Buat)))
 	mux.Handle("POST /users/{id}/status", auth.RequireRole("admin")(http.HandlerFunc(users.Status)))
 	mux.Handle("POST /users/{id}/password", auth.RequireRole("admin")(http.HandlerFunc(users.ResetPassword)))
+
+	pos := auth.RequireRole("admin", "apoteker")
+	admin := auth.RequireRole("admin")
+	mux.Handle("GET /obat", pos(preview.Page("obat/list.html", "Obat & Satuan")))
+	mux.Handle("GET /obat/tambah", admin(preview.Page("obat/form.html", "Tambah Obat")))
+	mux.Handle("GET /obat/{id}", pos(preview.Page("obat/detail.html", "Detail Obat")))
+	mux.Handle("GET /obat/{id}/edit", admin(preview.Page("obat/form.html", "Edit Obat")))
+	mux.Handle("GET /pbf", pos(preview.Page("pbf/list.html", "PBF")))
+	mux.Handle("GET /penerimaan", pos(preview.Page("penerimaan/list.html", "Penerimaan")))
+	mux.Handle("GET /penerimaan/tambah", pos(preview.Page("penerimaan/form.html", "Penerimaan Baru")))
+	mux.Handle("GET /penerimaan/{id}", pos(preview.Page("penerimaan/detail.html", "Detail Penerimaan")))
+	mux.Handle("GET /kasir", pos(preview.Page("kasir/index.html", "Kasir")))
+	mux.Handle("GET /penjualan", pos(preview.Page("penjualan/list.html", "Riwayat Penjualan")))
+	mux.Handle("GET /penjualan/{id}", pos(preview.Page("penjualan/detail.html", "Detail Penjualan")))
+	mux.Handle("GET /penjualan/{id}/struk", pos(preview.Page("penjualan/struk.html", "Struk Penjualan")))
+	mux.Handle("GET /retur", pos(preview.Page("retur/list.html", "Retur Penjualan")))
+	mux.Handle("GET /retur/tambah", pos(preview.Page("retur/form.html", "Retur Baru")))
+	mux.Handle("GET /retur/{id}", pos(preview.Page("retur/detail.html", "Detail Retur")))
+	mux.Handle("GET /opname", pos(preview.Page("opname/list.html", "Stock Opname")))
+	mux.Handle("GET /opname/tambah", pos(preview.Page("opname/form.html", "Opname Baru")))
+	mux.Handle("GET /opname/{id}", pos(preview.Page("opname/detail.html", "Detail Opname")))
+	mux.Handle("GET /laporan/stok", pos(preview.Page("laporan/stok.html", "Laporan Stok")))
+	mux.Handle("GET /laporan/kedaluwarsa", pos(preview.Page("laporan/kedaluwarsa.html", "Laporan Kedaluwarsa")))
+	mux.Handle("GET /laporan/laba", admin(preview.Page("laporan/laba.html", "Laporan Laba Kotor")))
 
 	root := middleware.Logging(middleware.SecurityHeaders(auth.LoadUser(mux)))
 	srv := &http.Server{

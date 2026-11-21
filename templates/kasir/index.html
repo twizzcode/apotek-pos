@@ -1,0 +1,86 @@
+{{define "content"}}
+<div class="page-head">
+    <div>
+        <h1>Kasir</h1>
+        <p class="muted">
+            Stok dialokasikan otomatis dari batch FEFO saat checkout
+        </p>
+    </div>
+    <a class="btn" href="/penjualan">Riwayat Penjualan</a>
+</div>
+<div class="cashier-grid">
+    <section>
+        <div class="panel search-box">
+            <label
+                >Cari obat<input
+                    type="search"
+                    placeholder="Ketik nama obat..."
+                    data-product-search
+                    autofocus
+            /></label>
+        </div>
+        <div class="product-grid">
+            <button
+                class="product-card"
+                type="button"
+                data-add-cart="Paracetamol 500 mg|Strip|9000"
+            >
+                <strong>Paracetamol 500 mg</strong><span>Strip · 10 tablet</span
+                ><small>Stok: 24 strip</small><b>Rp9.000</b></button
+            ><button
+                class="product-card"
+                type="button"
+                data-add-cart="Amoxicillin 500 mg|Strip|14000"
+            >
+                <strong>Amoxicillin 500 mg</strong><span>Strip · 10 kaplet</span
+                ><small>Stok: 8 strip</small><b>Rp14.000</b></button
+            ><button
+                class="product-card"
+                type="button"
+                data-add-cart="OBH Sirup 100 ml|Botol|18000"
+            >
+                <strong>OBH Sirup 100 ml</strong><span>Botol</span
+                ><small>Stok: 18 botol</small><b>Rp18.000</b></button
+            ><button
+                class="product-card"
+                type="button"
+                data-add-cart="Salep Antijamur 10 g|Tube|22000"
+            >
+                <strong>Salep Antijamur 10 g</strong><span>Tube</span
+                ><small>Stok: 12 tube</small><b>Rp22.000</b>
+            </button>
+        </div>
+    </section>
+    <aside class="cart panel">
+        <div class="section-head">
+            <h2>Keranjang</h2>
+            <button class="link-button" type="button" data-clear-cart>
+                Kosongkan
+            </button>
+        </div>
+        <div data-cart-list>
+            <div class="cart-empty">Pilih obat untuk menambahkannya.</div>
+        </div>
+        <div class="cart-total">
+            <span>Total</span><strong data-cart-total>Rp0</strong>
+        </div>
+        <label
+            >Uang dibayar<input
+                type="number"
+                min="0"
+                placeholder="0"
+                data-payment
+        /></label>
+        <div class="change">
+            <span>Kembalian</span><strong data-change>Rp0</strong>
+        </div>
+        <button class="btn btn-primary btn-block" type="button">
+            Proses Pembayaran
+        </button>
+        <p class="preview-note">
+            Keranjang berfungsi di browser sebagai prototype. Backend checkout
+            tetap akan memvalidasi harga, stok, dan FEFO.
+        </p>
+    </aside>
+</div>
+{{end}}

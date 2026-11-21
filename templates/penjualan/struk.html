@@ -1,0 +1,39 @@
+{{define "content"}}
+<div class="receipt-actions">
+    <a class="btn" href="/penjualan/1">Kembali</a
+    ><button class="btn btn-primary" type="button" data-print>Cetak</button>
+</div>
+<article class="receipt">
+    <header>
+        <h1>APOTEK SUMBER WARAS</h1>
+        <p>Jl. Sehat No. 10 · Telp. 021-5550100</p>
+    </header>
+    <div class="receipt-meta">
+        <span>PJL-261121-0018</span><span>21/11/2026 14:25</span
+        ><span>Kasir: Apoteker</span>
+    </div>
+    <div class="receipt-lines">
+        <div>
+            <span>Paracetamol 500 mg<br /><small>2 Strip × Rp9.000</small></span
+            ><b>Rp18.000</b>
+        </div>
+        <div>
+            <span>OBH Sirup 100 ml<br /><small>1 Botol × Rp18.000</small></span
+            ><b>Rp18.000</b>
+        </div>
+        <div>
+            <span
+                >Salep Antijamur 10 g<br /><small
+                    >1 Tube × Rp22.000</small
+                ></span
+            ><b>Rp22.000</b>
+        </div>
+    </div>
+    <div class="receipt-totals">
+        <div><span>TOTAL</span><b>Rp58.000</b></div>
+        <div><span>TUNAI</span><span>Rp100.000</span></div>
+        <div><span>KEMBALI</span><span>Rp42.000</span></div>
+    </div>
+    <footer>Terima kasih. Semoga lekas sehat.</footer>
+</article>
+{{end}}

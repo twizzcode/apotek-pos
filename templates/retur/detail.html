@@ -1,0 +1,51 @@
+{{define "content"}}
+<div class="page-head">
+    <div>
+        <h1>RTR-261120-0003</h1>
+        <p class="muted">20 Nov 2026 · Apoteker</p>
+    </div>
+    <a class="btn" href="/retur">Kembali</a>
+</div>
+<section class="panel">
+    <dl class="summary horizontal">
+        <div>
+            <dt>Transaksi asal</dt>
+            <dd>
+                <a class="text-link" href="/penjualan/1">PJL-261119-0082</a>
+            </dd>
+        </div>
+        <div>
+            <dt>Alasan</dt>
+            <dd>Resep diganti dokter</dd>
+        </div>
+        <div>
+            <dt>Total refund</dt>
+            <dd>Rp9.000</dd>
+        </div>
+    </dl>
+</section>
+<section class="panel table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Obat</th>
+                <th>Batch Asal</th>
+                <th>Qty Dasar</th>
+                <th>Kondisi</th>
+                <th>Stok</th>
+                <th>Refund</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Paracetamol 500 mg</td>
+                <td>PCT-2402</td>
+                <td>10 tablet</td>
+                <td><span class="badge">Baik</span></td>
+                <td>Dikembalikan ke batch asal</td>
+                <td>Rp9.000</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+{{end}}

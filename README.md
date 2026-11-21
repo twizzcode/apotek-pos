@@ -58,4 +58,4 @@ Stok selalu disimpan sebagai satuan dasar. Contoh: satu box paracetamol berisi 1
 go test ./...
 ```
 
-Pembagian kerja: [`docs/pembagian-tugas.md`](docs/pembagian-tugas.md). Diagram database: [`docs/ERD.md`](docs/ERD.md).
+Pembagian kerja: [`docs/pembagian-tugas.md`](docs/pembagian-tugas.md). Diagram database: [`docs/ERD.md`](docs/ERD.md). Kontrak integrasi UI: [`docs/frontend-contract.md`](docs/frontend-contract.md).
