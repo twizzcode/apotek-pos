@@ -1,4 +1,52 @@
 {{define "content"}}
-<div class="page-head"><div><h1>Pedagang Besar Farmasi</h1><p class="muted">Data pemasok resmi apotek</p></div></div>
-<div class="detail-grid"><section class="panel"><h2>Daftar PBF</h2><table><thead><tr><th>Nama</th><th>Telepon</th><th>Alamat</th><th>Status</th><th>Aksi</th></tr></thead><tbody><tr><td>PBF Sehat Sentosa</td><td>021-5550101</td><td>Jakarta</td><td><span class="badge">Aktif</span></td><td><button class="btn btn-small">Edit</button></td></tr><tr><td>PBF Medika Utama</td><td>021-5550102</td><td>Bogor</td><td><span class="badge">Aktif</span></td><td><button class="btn btn-small">Edit</button></td></tr></tbody></table></section>{{if eq .User.Role "admin"}}<form class="panel stack"><h2>Tambah PBF</h2><label>Nama PBF<input required></label><label>Telepon<input type="tel"></label><label>Alamat<textarea rows="3"></textarea></label><button class="btn btn-primary" type="button">Simpan PBF</button></form>{{end}}</div>
+<div class="page-head">
+    <div><h1>Pedagang Besar Farmasi</h1><p class="muted">Data pemasok resmi apotek</p></div>
+</div>
+{{if .Error}}<div class="alert alert-error">{{.Error}}</div>{{end}}
+{{if .Pesan}}<div class="alert alert-success">{{.Pesan}}</div>{{end}}
+<div class="detail-grid">
+    <section class="panel">
+        <h2>Daftar PBF</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Nama</th><th>Telepon</th><th>Alamat</th><th>Status</th><th>Aksi</th></tr></thead>
+                <tbody>
+                    {{range .Data.Daftar}}
+                    <tr>
+                        <td>{{.Nama}}</td>
+                        <td>{{if .Telepon}}{{.Telepon}}{{else}}-{{end}}</td>
+                        <td>{{if .Alamat}}{{.Alamat}}{{else}}-{{end}}</td>
+                        <td>{{if .Aktif}}<span class="badge">Aktif</span>{{else}}<span class="badge badge-warning">Nonaktif</span>{{end}}</td>
+                        <td>
+                            {{if eq $.User.Role "admin"}}
+                            <div class="actions">
+                                <a class="btn btn-small" href="/pbf/{{.ID}}/edit">Edit</a>
+                                <form method="post" action="/pbf/{{.ID}}/status">
+                                    <input type="hidden" name="aktif" value="{{if .Aktif}}0{{else}}1{{end}}">
+                                    <button class="btn btn-small {{if .Aktif}}btn-danger{{end}}" type="submit">{{if .Aktif}}Nonaktifkan{{else}}Aktifkan{{end}}</button>
+                                </form>
+                            </div>
+                            {{else}}-{{end}}
+                        </td>
+                    </tr>
+                    {{else}}
+                    <tr><td colspan="5" class="muted">Belum ada data PBF.</td></tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </div>
+    </section>
+    {{if eq .User.Role "admin"}}
+    <form class="panel stack" method="post" action="{{if .Data.Edit}}/pbf/{{.Data.Form.ID}}{{else}}/pbf{{end}}">
+        <h2>{{if .Data.Edit}}Edit PBF{{else}}Tambah PBF{{end}}</h2>
+        <label>Nama PBF<input name="nama" value="{{.Data.Form.Nama}}" required></label>
+        <label>Telepon<input name="telepon" type="tel" value="{{.Data.Form.Telepon}}"></label>
+        <label>Alamat<textarea name="alamat" rows="3">{{.Data.Form.Alamat}}</textarea></label>
+        <div class="actions">
+            <button class="btn btn-primary" type="submit">{{if .Data.Edit}}Simpan Perubahan{{else}}Simpan PBF{{end}}</button>
+            {{if .Data.Edit}}<a class="btn" href="/pbf">Batal</a>{{end}}
+        </div>
+    </form>
+    {{end}}
+</div>
 {{end}}
