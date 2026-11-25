@@ -1,22 +1,62 @@
+
 {{define "content"}}
 <div class="page-head">
     <div>
-        <h1>Paracetamol 500 mg</h1>
+        <h1>{{.Data.Nama}}</h1>
         <p class="muted">
-            Satuan dasar: Tablet · <span class="badge">Aktif</span>
+            Satuan dasar: {{.Data.SatuanDasar}} ·
+            {{if .Data.Aktif}}
+                <span class="badge">Aktif</span>
+            {{else}}
+                <span class="badge badge-warning">Nonaktif</span>
+            {{end}}
         </p>
     </div>
+
+    
     <div class="actions">
-        <a class="btn" href="/obat">Kembali</a>{{if eq .User.Role "admin"}}<a
-            class="btn btn-primary"
-            href="/obat/1/edit"
-            >Edit</a
-        >{{end}}
+        <a class="btn" href="/obat">Kembali</a>
+
+        {{if eq .User.Role "admin"}}
+            <a class="btn btn-primary" href="/obat/{{.Data.ID}}/edit">
+                Edit
+            </a>
+
+            <form method="POST"
+                action="/obat/{{.Data.ID}}/hapus"
+                onsubmit="return confirm('Yakin ingin menghapus obat ini?')">
+                <button type="submit" class="btn btn-danger">
+                    Hapus
+                </button>
+            </form>
+
+        {{if .Data.Aktif}}
+        <form method="POST"
+            action="/obat/{{.Data.ID}}/status"
+            onsubmit="return confirm('Yakin ingin menonaktifkan obat ini?')">
+            <input type="hidden" name="aktif" value="0">
+            <button type="submit" class="btn btn-danger">
+                Nonaktifkan Obat
+            </button>
+        </form>
+        {{else}}
+        <form method="POST"
+            action="/obat/{{.Data.ID}}/status"
+            onsubmit="return confirm('Yakin ingin mengaktifkan obat ini?')">
+            <input type="hidden" name="aktif" value="1">
+            <button type="submit" class="btn btn-primary">
+                Aktifkan Obat
+            </button>
+        </form>
+        {{end}}
+        {{end}}
     </div>
 </div>
+
 <div class="detail-grid">
     <section class="panel">
         <h2>Konversi & Harga</h2>
+
         <table>
             <thead>
                 <tr>
@@ -26,76 +66,79 @@
                 </tr>
             </thead>
             <tbody>
+                {{range .Data.Satuan}}
                 <tr>
-                    <td>Tablet</td>
-                    <td>1 tablet</td>
-                    <td>Rp1.000</td>
+                    <td>{{.Nama}}</td>
+                    <td>{{.Isi}} {{$.Data.SatuanDasar}}</td>
+                    <td>{{rupiah .HargaJual}}</td>
                 </tr>
+                {{else}}
                 <tr>
-                    <td>Strip</td>
-                    <td>10 tablet</td>
-                    <td>Rp9.000</td>
+                    <td colspan="3">Belum ada konversi satuan.</td>
                 </tr>
-                <tr>
-                    <td>Box</td>
-                    <td>100 tablet</td>
-                    <td>Rp85.000</td>
-                </tr>
+                {{end}}
             </tbody>
         </table>
     </section>
+
     <section class="panel">
         <h2>Ringkasan Stok</h2>
+
         <dl class="summary">
             <div>
                 <dt>Total tercatat</dt>
-                <dd>265 tablet</dd>
+                <dd>{{.Data.StokTotal}} {{.Data.SatuanDasar}}</dd>
             </div>
             <div>
                 <dt>Layak jual</dt>
-                <dd>245 tablet</dd>
+                <dd>{{.Data.StokLayak}} {{.Data.SatuanDasar}}</dd>
             </div>
             <div>
                 <dt>Diblokir ED</dt>
-                <dd class="text-warning">20 tablet</dd>
+                <dd class="text-warning">
+                    {{.Data.StokBlokir}} {{.Data.SatuanDasar}}
+                </dd>
             </div>
         </dl>
     </section>
 </div>
+
 <section class="panel table-wrap">
     <h2>Stok Per Batch</h2>
+
     <table>
         <thead>
             <tr>
                 <th>No. Batch</th>
                 <th>Kedaluwarsa</th>
-                <th>HPP/Tablet</th>
+                <th>HPP/Satuan Dasar</th>
                 <th>Stok</th>
                 <th>Status</th>
             </tr>
         </thead>
+
         <tbody>
+            {{range .Data.Batch}}
             <tr>
-                <td>PCT-2401</td>
-                <td>20 Feb 2027</td>
-                <td>Rp620</td>
-                <td>20</td>
-                <td><span class="badge badge-warning">Blokir jual</span></td>
+                <td>{{.NoBatch}}</td>
+                <td>{{tanggal .ExpiredAt}}</td>
+                <td>{{printf "Rp%.0f" .HargaBeliDasar}}</td>
+                <td>{{.Stok}}</td>
+                <td>
+                    {{if eq .Status "Layak jual"}}
+                        <span class="badge">Layak jual</span>
+                    {{else}}
+                        <span class="badge badge-warning">
+                            Blokir jual
+                        </span>
+                    {{end}}
+                </td>
             </tr>
+            {{else}}
             <tr>
-                <td>PCT-2402</td>
-                <td>18 Agu 2027</td>
-                <td>Rp650</td>
-                <td>95</td>
-                <td><span class="badge">Layak jual</span></td>
+                <td colspan="5">Belum ada data batch.</td>
             </tr>
-            <tr>
-                <td>PCT-2403</td>
-                <td>10 Jan 2028</td>
-                <td>Rp675</td>
-                <td>150</td>
-                <td><span class="badge">Layak jual</span></td>
-            </tr>
+            {{end}}
         </tbody>
     </table>
 </section>

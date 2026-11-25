@@ -34,6 +34,9 @@ func main() {
 	dashboard := &handler.DashboardHandler{Repo: &repository.DashboardRepo{DB: db}, View: view}
 	users := &handler.UserHandler{Svc: userSvc, View: view}
 	preview := &handler.PreviewHandler{View: view}
+	obatRepo := &repository.ObatRepo{DB: db}
+	obatSvc := &service.ObatService{Repo: obatRepo}
+	obatHandler := &handler.ObatHandler{Svc: obatSvc, View: view}
 
 	mux := http.NewServeMux()
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -49,10 +52,15 @@ func main() {
 
 	pos := auth.RequireRole("admin", "apoteker")
 	admin := auth.RequireRole("admin")
-	mux.Handle("GET /obat", pos(preview.Page("obat/list.html", "Obat & Satuan")))
-	mux.Handle("GET /obat/tambah", admin(preview.Page("obat/form.html", "Tambah Obat")))
-	mux.Handle("GET /obat/{id}", pos(preview.Page("obat/detail.html", "Detail Obat")))
-	mux.Handle("GET /obat/{id}/edit", admin(preview.Page("obat/form.html", "Edit Obat")))
+	// Modul Obat
+	mux.Handle("GET /obat", pos(http.HandlerFunc(obatHandler.Daftar)))
+	mux.Handle("GET /obat/tambah", admin(http.HandlerFunc(obatHandler.FormTambah)))
+	mux.Handle("POST /obat/tambah", admin(http.HandlerFunc(obatHandler.Buat)))
+	mux.Handle("GET /obat/{id}", pos(http.HandlerFunc(obatHandler.Detail)))
+	mux.Handle("GET /obat/{id}/edit", admin(http.HandlerFunc(obatHandler.FormEdit)))
+	mux.Handle("POST /obat/{id}/edit", admin(http.HandlerFunc(obatHandler.Update)))
+	mux.Handle("POST /obat/{id}/status", admin(http.HandlerFunc(obatHandler.Status)))
+	mux.Handle("POST /obat/{id}/hapus", admin(http.HandlerFunc(obatHandler.Hapus)))
 	mux.Handle("GET /pbf", pos(preview.Page("pbf/list.html", "PBF")))
 	mux.Handle("GET /penerimaan", pos(preview.Page("penerimaan/list.html", "Penerimaan")))
 	mux.Handle("GET /penerimaan/tambah", pos(preview.Page("penerimaan/form.html", "Penerimaan Baru")))

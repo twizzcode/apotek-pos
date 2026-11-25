@@ -13,11 +13,13 @@ import (
 )
 
 type PageData struct {
-	Title string
-	User  model.User
-	Error string
-	Pesan string
-	Data  any
+	Title  string
+	User   model.User
+	Error  string
+	Pesan  string
+	Data   any
+	Query  string
+	Status string
 }
 
 type Renderer struct{ pages map[string]*template.Template }
