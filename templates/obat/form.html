@@ -1,7 +1,139 @@
+
 {{define "content"}}
-<div class="page-head"><div><h1>{{.Title}}</h1><p class="muted">Atur satuan dasar dan setiap kemasan yang dapat dijual</p></div><a class="btn" href="/obat">Kembali</a></div>
-<form class="panel stack wide-form"><div class="form-grid two"><label>Nama obat<input value="{{if eq .Title "Edit Obat"}}Paracetamol 500 mg{{end}}" required></label><label>Satuan dasar<select><option>Tablet</option><option>Kaplet</option><option>Botol</option><option>Tube</option></select></label></div><label class="check"><input type="checkbox" checked> Obat aktif</label>
-<div class="section-head"><div><h2>Konversi dan Harga Jual</h2><p class="muted">Isi menunjukkan jumlah satuan dasar.</p></div><button class="btn" type="button" data-add-row="conversion-row">+ Satuan</button></div>
-<div class="repeat-list" data-list="conversion-row"><div class="repeat-row"><label>Satuan<select><option>Tablet</option><option>Strip</option><option>Box</option></select></label><label>Isi<input type="number" min="1" value="1"></label><label>Harga jual<input type="number" min="0" value="1000"></label><button class="btn btn-danger row-remove" type="button">Hapus</button></div><div class="repeat-row"><label>Satuan<select><option>Strip</option></select></label><label>Isi<input type="number" min="1" value="10"></label><label>Harga jual<input type="number" min="0" value="9000"></label><button class="btn btn-danger row-remove" type="button">Hapus</button></div></div>
-<div class="form-actions"><a class="btn" href="/obat">Batal</a><button class="btn btn-primary" type="button">Simpan Obat</button></div></form>
+<div class="page-head">
+    <div>
+        <h1>{{.Title}}</h1>
+        <p class="muted">Atur satuan dasar dan setiap kemasan yang dapat dijual</p>
+    </div>
+    <a class="btn" href="/obat">Kembali</a>
+</div>
+
+{{if .Error}}
+<div class="alert alert-error">{{.Error}}</div>
+{{end}}
+
+<form class="panel stack wide-form"
+    method="POST"
+    action="{{if eq .Title "Edit Obat"}}/obat/{{.Data.Obat.ID}}/edit{{else}}/obat/tambah{{end}}">
+
+    <div class="form-grid two">
+        <label>
+            Nama obat
+            <input
+                type="text"
+                name="nama"
+                value="{{.Data.Obat.Nama}}"
+                required
+            >
+        </label>
+
+        <label>
+            Satuan dasar
+            <select name="satuan_dasar_id" required>
+                <option value="">Pilih satuan</option>
+                {{range .Data.Satuan}}
+                <option
+                    value="{{.ID}}"
+                    {{if eq .ID $.Data.Obat.SatuanDasarID}}selected{{end}}
+                >
+                    {{.Nama}}
+                </option>
+                {{end}}
+            </select>
+        </label>
+    </div>
+
+    <label class="check">
+        <input
+            type="checkbox"
+            name="aktif"
+            value="1"
+            {{if or (eq .Title "Tambah Obat") .Data.Obat.Aktif}}checked{{end}}
+        >
+        Obat aktif
+    </label>
+
+    <div class="section-head">
+        <div>
+            <h2>Konversi dan Harga Jual</h2>
+            <p class="muted">Isi menunjukkan jumlah satuan dasar.</p>
+        </div>
+        <button class="btn" type="button" data-add-row="conversion-row">
+            + Satuan
+        </button>
+    </div>
+
+    <div class="repeat-list" data-list="conversion-row">
+
+        {{if .Data.Obat.Satuan}}
+            {{range .Data.Obat.Satuan}}
+            {{$obatSatuan := .}}
+            <div class="repeat-row">
+                <label>
+                    Satuan
+                    <select name="satuan_id" required>
+                        {{range $.Data.Satuan}}
+                        <option
+                            value="{{.ID}}"
+                            {{if eq .ID $obatSatuan.SatuanID}}selected{{end}}
+                        >
+                            {{.Nama}}
+                        </option>
+                        {{end}}
+                    </select>
+                </label>
+
+                <label>
+                    Isi
+                    <input type="number" name="isi"
+                        min="1" value="{{$obatSatuan.Isi}}" required>
+                </label>
+
+                <label>
+                    Harga jual
+                    <input type="number" name="harga_jual"
+                        min="0" value="{{.HargaJual}}" required>
+                </label>
+
+                <button class="btn btn-danger row-remove"
+                    type="button">Hapus</button>
+            </div>
+            {{end}}
+        {{else}}
+            <div class="repeat-row">
+                <label>
+                    Satuan
+                    <select name="satuan_id" required>
+                        {{range .Data.Satuan}}
+                        <option value="{{.ID}}">{{.Nama}}</option>
+                        {{end}}
+                    </select>
+                </label>
+
+                <label>
+                    Isi
+                    <input type="number" name="isi"
+                        min="1" value="1" required>
+                </label>
+
+                <label>
+                    Harga jual
+                    <input type="number" name="harga_jual"
+                        min="0" value="0" required>
+                </label>
+
+                <button class="btn btn-danger row-remove"
+                    type="button">Hapus</button>
+            </div>
+        {{end}}
+
+    </div>
+
+    <div class="form-actions">
+        <a class="btn" href="/obat">Batal</a>
+        <button class="btn btn-primary" type="submit">
+            Simpan Obat
+        </button>
+    </div>
+</form>
 {{end}}

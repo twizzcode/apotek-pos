@@ -10,16 +10,34 @@
         >+ Tambah Obat</a
     >{{end}}
 </div>
-<form class="filter-bar">
-    <label class="grow"
-        >Cari obat<input type="search" placeholder="Nama obat..." /></label
-    ><label
-        >Status<select>
-            <option>Semua</option>
-            <option>Aktif</option>
-            <option>Nonaktif</option>
-        </select></label
-    ><button class="btn" type="button">Terapkan</button>
+
+<form class="filter-bar" method="GET" action="/obat">
+    <label class="grow">
+        Cari obat
+        <input
+            type="search"
+            name="q"
+            placeholder="Nama obat..."
+            value="{{.Query}}"
+        />
+    </label>
+
+    <label>
+        Status
+        <select name="status">
+            <option value="" {{if eq .Status ""}}selected{{end}}>
+                Semua
+            </option>
+            <option value="aktif" {{if eq .Status "aktif"}}selected{{end}}>
+                Aktif
+            </option>
+            <option value="nonaktif" {{if eq .Status "nonaktif"}}selected{{end}}>
+                Nonaktif
+            </option>
+        </select>
+    </label>
+
+    <button class="btn" type="submit">Terapkan</button>
 </form>
 <section class="panel table-wrap">
     <table>
@@ -32,43 +50,39 @@
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Paracetamol 500 mg</strong></td>
-                <td>Tablet</td>
-                <td>
-                    <span class="chip">Tablet · Rp1.000</span>
-                    <span class="chip">Strip (10) · Rp9.000</span>
-                    <span class="chip">Box (100) · Rp85.000</span>
-                </td>
-                <td>245 tablet</td>
-                <td><span class="badge">Aktif</span></td>
-                <td><a class="btn btn-small" href="/obat/1">Detail</a></td>
-            </tr>
-            <tr>
-                <td><strong>Amoxicillin 500 mg</strong></td>
-                <td>Kaplet</td>
-                <td>
-                    <span class="chip">Kaplet · Rp1.500</span>
-                    <span class="chip">Strip (10) · Rp14.000</span>
-                </td>
-                <td>80 kaplet</td>
-                <td><span class="badge">Aktif</span></td>
-                <td><a class="btn btn-small" href="/obat/2">Detail</a></td>
-            </tr>
-            <tr>
-                <td><strong>OBH Sirup 100 ml</strong></td>
-                <td>Botol</td>
-                <td><span class="chip">Botol · Rp18.000</span></td>
-                <td>18 botol</td>
-                <td><span class="badge">Aktif</span></td>
-                <td><a class="btn btn-small" href="/obat/4">Detail</a></td>
-            </tr>
-        </tbody>
+        </thead>  
+            <tbody>
+                {{range .Data}}
+                <tr>
+                    <td><strong>{{.Nama}}</strong></td>
+                    <td>{{.SatuanDasar}}</td>
+                    <td>
+                        {{range .Satuan}}
+                        <span class="chip">
+                            {{.Nama}} ({{.Isi}}) · {{rupiah .HargaJual}}
+                        </span>
+                        {{end}}
+                    </td>
+                    <td>{{.StokLayak}} {{.SatuanDasar}}</td>
+                    <td>
+                        {{if .Aktif}}
+                        <span class="badge">Aktif</span>
+                        {{else}}
+                        <span class="badge badge-warning">Nonaktif</span>
+                        {{end}}
+                    </td>
+                    <td>
+                        <a class="btn btn-small" href="/obat/{{.ID}}">
+                            Detail
+                        </a>
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="6">Belum ada data obat.</td>
+                </tr>
+                {{end}}
+            </tbody>
     </table>
-    <p class="preview-note">
-        Data contoh frontend. Backend master obat akan menggantinya.
-    </p>
 </section>
 {{end}}
