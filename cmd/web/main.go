@@ -33,6 +33,8 @@ func main() {
 	authHandler := &handler.AuthHandler{Svc: userSvc, Auth: auth, View: view}
 	dashboard := &handler.DashboardHandler{Repo: &repository.DashboardRepo{DB: db}, View: view}
 	users := &handler.UserHandler{Svc: userSvc, View: view}
+	pbfSvc := &service.PBFService{Repo: &repository.PBFRepository{DB: db}}
+	pbfs := &handler.PBFHandler{Svc: pbfSvc, View: view}
 	preview := &handler.PreviewHandler{View: view}
 	opnameH := &handler.OpnameHandler{
 		Svc:  &service.OpnameService{Repo: &repository.OpnameRepository{DB: db}},
@@ -57,7 +59,11 @@ func main() {
 	mux.Handle("GET /obat/tambah", admin(preview.Page("obat/form.html", "Tambah Obat")))
 	mux.Handle("GET /obat/{id}", pos(preview.Page("obat/detail.html", "Detail Obat")))
 	mux.Handle("GET /obat/{id}/edit", admin(preview.Page("obat/form.html", "Edit Obat")))
-	mux.Handle("GET /pbf", pos(preview.Page("pbf/list.html", "PBF")))
+	mux.Handle("GET /pbf", pos(http.HandlerFunc(pbfs.Daftar)))
+	mux.Handle("GET /pbf/{id}/edit", admin(http.HandlerFunc(pbfs.Edit)))
+	mux.Handle("POST /pbf", admin(http.HandlerFunc(pbfs.Buat)))
+	mux.Handle("POST /pbf/{id}", admin(http.HandlerFunc(pbfs.Ubah)))
+	mux.Handle("POST /pbf/{id}/status", admin(http.HandlerFunc(pbfs.Status)))
 	mux.Handle("GET /penerimaan", pos(preview.Page("penerimaan/list.html", "Penerimaan")))
 	mux.Handle("GET /penerimaan/tambah", pos(preview.Page("penerimaan/form.html", "Penerimaan Baru")))
 	mux.Handle("GET /penerimaan/{id}", pos(preview.Page("penerimaan/detail.html", "Detail Penerimaan")))
