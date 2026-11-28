@@ -1,5 +1,8 @@
 {{define "content"}}
 <div class="page-head"><div><h1>Stock Opname</h1><p class="muted">Riwayat pencocokan stok sistem dan fisik per batch</p></div><a class="btn btn-primary" href="/opname/tambah">+ Mulai Opname</a></div>
-<form class="filter-bar"><label>Dari<input type="date"></label><label>Sampai<input type="date"></label><label class="grow">Kode opname<input type="search" placeholder="OPN-..."></label><button class="btn" type="button">Terapkan</button></form>
-<section class="panel table-wrap"><table><thead><tr><th>Kode</th><th>Tanggal</th><th>Petugas</th><th>Batch Dihitung</th><th>Selisih +</th><th>Selisih −</th><th>Aksi</th></tr></thead><tbody><tr><td><strong>OPN-261031-001</strong></td><td>31 Okt 2026</td><td>Administrator</td><td>28</td><td class="text-success">+12</td><td class="text-danger">−19</td><td><a class="btn btn-small" href="/opname/1">Detail</a></td></tr><tr><td><strong>OPN-260930-001</strong></td><td>30 Sep 2026</td><td>Apoteker</td><td>25</td><td class="text-success">+5</td><td class="text-danger">−8</td><td><a class="btn btn-small" href="/opname/2">Detail</a></td></tr></tbody></table></section>
+<form class="filter-bar" method="get" action="/opname"><label>Dari<input type="date" name="dari" value="{{.Data.Dari}}"></label><label>Sampai<input type="date" name="sampai" value="{{.Data.Sampai}}"></label><label class="grow">Kode opname<input type="search" name="kode" value="{{.Data.Kode}}" placeholder="OPN-..."></label><button class="btn" type="submit">Terapkan</button></form>
+<section class="panel table-wrap"><table><thead><tr><th>Kode</th><th>Tanggal</th><th>Petugas</th><th>Batch Dihitung</th><th>Selisih +</th><th>Selisih −</th><th>Aksi</th></tr></thead><tbody>
+{{range .Data.Daftar}}<tr><td><strong>{{.Kode}}</strong></td><td>{{tanggal .Tanggal}}</td><td>{{.Petugas}}</td><td>{{.JumlahBatch}}</td><td class="text-success">+{{.SelisihPlus}}</td><td class="text-danger">−{{.SelisihMinus}}</td><td><a class="btn btn-small" href="/opname/{{.ID}}">Detail</a></td></tr>
+{{else}}<tr><td colspan="7" class="muted">Belum ada opname.</td></tr>{{end}}
+</tbody></table></section>
 {{end}}

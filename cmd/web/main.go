@@ -34,6 +34,10 @@ func main() {
 	dashboard := &handler.DashboardHandler{Repo: &repository.DashboardRepo{DB: db}, View: view}
 	users := &handler.UserHandler{Svc: userSvc, View: view}
 	preview := &handler.PreviewHandler{View: view}
+	opnameH := &handler.OpnameHandler{
+		Svc:  &service.OpnameService{Repo: &repository.OpnameRepository{DB: db}},
+		View: view,
+	}
 
 	mux := http.NewServeMux()
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -64,9 +68,10 @@ func main() {
 	mux.Handle("GET /retur", pos(preview.Page("retur/list.html", "Retur Penjualan")))
 	mux.Handle("GET /retur/tambah", pos(preview.Page("retur/form.html", "Retur Baru")))
 	mux.Handle("GET /retur/{id}", pos(preview.Page("retur/detail.html", "Detail Retur")))
-	mux.Handle("GET /opname", pos(preview.Page("opname/list.html", "Stock Opname")))
-	mux.Handle("GET /opname/tambah", pos(preview.Page("opname/form.html", "Opname Baru")))
-	mux.Handle("GET /opname/{id}", pos(preview.Page("opname/detail.html", "Detail Opname")))
+	mux.Handle("GET /opname", pos(http.HandlerFunc(opnameH.Daftar)))
+	mux.Handle("GET /opname/tambah", pos(http.HandlerFunc(opnameH.Form)))
+	mux.Handle("POST /opname", pos(http.HandlerFunc(opnameH.Simpan)))
+	mux.Handle("GET /opname/{id}", pos(http.HandlerFunc(opnameH.Detail)))
 	mux.Handle("GET /laporan/stok", pos(preview.Page("laporan/stok.html", "Laporan Stok")))
 	mux.Handle("GET /laporan/kedaluwarsa", pos(preview.Page("laporan/kedaluwarsa.html", "Laporan Kedaluwarsa")))
 	mux.Handle("GET /laporan/laba", admin(preview.Page("laporan/laba.html", "Laporan Laba Kotor")))
